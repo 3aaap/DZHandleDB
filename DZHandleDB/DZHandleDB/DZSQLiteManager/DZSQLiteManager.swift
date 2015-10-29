@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// sql 执行失败标志
+let SQLExecFailed: Int = -1
+
 // MARK: SQLite 操作核心类
 class DZSQLiteManager {
     /// 创建单例对象
@@ -62,5 +65,37 @@ extension DZSQLiteManager {
         let sql = try! String(contentsOfFile: filePath)
         
         return execSQL(sql)
+    }
+}
+
+// MARK: - 数据修改操作语句执行
+extension DZSQLiteManager {
+    
+    /// 执行 SQL 插入数据
+    ///
+    /// - parameter sql:  sql 语句
+    ///
+    /// - returns:  最后一条插入数据的自增长 id / 失败后返回 SQLExecFailed
+    func insertExec(sql: String) -> Int {
+        if !execSQL(sql) {
+            // 操作失败返回
+            return SQLExecFailed
+        }
+        
+        return Int(sqlite3_last_insert_rowid(db))
+    }
+    
+    /// 执行修改和删除数据操作
+    ///
+    /// - parameter sql:  sql 语句
+    ///
+    /// - returns: 修改/删除 的数据行数 / 失败后返回 SQLExecFailed
+    func updateOrDelExec(sql: String) -> Int {
+        if !execSQL(sql) {
+            // 操作失败返回
+            return SQLExecFailed
+        }
+        
+        return Int(sqlite3_changes(db))
     }
 }
