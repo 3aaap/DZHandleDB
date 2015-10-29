@@ -12,14 +12,17 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // MARK: -测试代码
+        createTable()
     }
+}
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+// MARK: - 测试函数
+extension ViewController {
+    // 测试使用文件批量建表
+    func createTable() {
+        
+        DZSQLiteManager.sharedManager.createTableBySQLFile("demo.sql")
     }
-
-
 }
 

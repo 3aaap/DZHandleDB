@@ -14,6 +14,8 @@
 		DA83175E1BE273BB00751D09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA83175C1BE273BB00751D09 /* LaunchScreen.storyboard */; };
 		DA83176B1BE2758600751D09 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA83176A1BE2758600751D09 /* libsqlite3.dylib */; };
 		DA8317701BE2791500751D09 /* DZSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA83176F1BE2791500751D09 /* DZSQLiteManager.swift */; };
+		DA8317721BE283EE00751D09 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA8317711BE283EE00751D09 /* Person.swift */; };
+		DA8317741BE28B5A00751D09 /* demo.sql in Resources */ = {isa = PBXBuildFile; fileRef = DA8317731BE28B5A00751D09 /* demo.sql */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		DA83176A1BE2758600751D09 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../../../usr/lib/libsqlite3.dylib; sourceTree = "<group>"; };
 		DA83176E1BE278B100751D09 /* SQLite-Bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SQLite-Bridge.h"; sourceTree = "<group>"; };
 		DA83176F1BE2791500751D09 /* DZSQLiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DZSQLiteManager.swift; sourceTree = "<group>"; };
+		DA8317711BE283EE00751D09 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		DA8317731BE28B5A00751D09 /* demo.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = demo.sql; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,8 @@
 				DA8317651BE2741100751D09 /* DZSQLiteManager */,
 				DA8317531BE273BB00751D09 /* AppDelegate.swift */,
 				DA8317551BE273BB00751D09 /* ViewController.swift */,
+				DA8317711BE283EE00751D09 /* Person.swift */,
+				DA8317731BE28B5A00751D09 /* demo.sql */,
 				DA8317571BE273BB00751D09 /* Main.storyboard */,
 				DA83175A1BE273BB00751D09 /* Assets.xcassets */,
 				DA83175C1BE273BB00751D09 /* LaunchScreen.storyboard */,
@@ -143,6 +149,7 @@
 				DA83175E1BE273BB00751D09 /* LaunchScreen.storyboard in Resources */,
 				DA83175B1BE273BB00751D09 /* Assets.xcassets in Resources */,
 				DA8317591BE273BB00751D09 /* Main.storyboard in Resources */,
+				DA8317741BE28B5A00751D09 /* demo.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,6 +162,7 @@
 			files = (
 				DA8317561BE273BB00751D09 /* ViewController.swift in Sources */,
 				DA8317701BE2791500751D09 /* DZSQLiteManager.swift in Sources */,
+				DA8317721BE283EE00751D09 /* Person.swift in Sources */,
 				DA8317541BE273BB00751D09 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
