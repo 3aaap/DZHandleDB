@@ -28,6 +28,22 @@ class Person: NSObject {
 }
 
 extension Person {
+    // 根据数据库中数据创建模型数组
+    class func persons() -> [Person]? {
+        let sql = "SELECT id, name, age, height FROM T_Person;"
+        guard let dataDictArr = DZSQLiteManager.sharedManager.queryExec(sql) else {
+            return nil
+        }
+        
+        var modelArr: [Person] = [Person]()
+        
+        for dict in dataDictArr {
+            modelArr.append(Person(dict: dict))
+        }
+        
+        return modelArr
+    }
+    
     // 根据数据模型向数据表中插入一条模型数据
     func insertPerson() -> Bool {
         let sql = "INSERT INTO T_Person\n" +

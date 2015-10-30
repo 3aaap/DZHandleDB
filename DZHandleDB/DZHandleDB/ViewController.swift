@@ -16,7 +16,8 @@ class ViewController: UIViewController {
 //        testCreateTable()
 //        testInsertData()
 //        testUpdateData()
-        testDeleteData()
+//        testDeleteData()
+        print(Person.persons()! as NSArray)
     }
 }
 

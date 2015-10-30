@@ -23,7 +23,7 @@ class DZSQLiteManager {
     /// - parameter dbName: 数据库名称
     func openDB(dbName: String) {
         // 默认将数据库创建在沙盒 document 路径下
-        // TODO: --后续尝试将路径进行封装，供调用方选择
+        // TODO: -- 后续尝试将路径进行封装，供调用方选择
         var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
         path = (path as NSString).stringByAppendingPathComponent(dbName)
         
@@ -43,6 +43,70 @@ class DZSQLiteManager {
     func execSQL(sql: String) -> Bool {
         
         return sqlite3_exec(db, sql, nil, nil, nil) == SQLITE_OK
+    }
+}
+
+// MARK: - 查询语句执行
+extension DZSQLiteManager {
+    /// 执行查询 sql 语句
+    ///
+    /// - parameter sql: sql 语句
+    ///
+    /// - returns: 语句执行结果集合 --- 语句执行错误会返回 nil
+    func queryExec(sql: String) -> [[String : AnyObject]]? {
+        // 创建结果集合
+        var result = [[String : AnyObject]]()
+        // 创建预编译指令操作句柄
+        var stmt: COpaquePointer = nil
+        
+        if sqlite3_prepare_v2(db, sql, -1, &stmt, nil) != SQLITE_OK {
+            print("预编译失败")
+            sqlite3_finalize(stmt)
+            return nil
+        }
+        
+        while sqlite3_step(stmt) == SQLITE_ROW {
+            result.append(getRecord(stmt))
+        }
+        
+        return result
+    }
+    
+    /// 根据预编译操作句柄获得单条结果字典
+    ///
+    /// - parameter stmt: stmt
+    ///
+    /// - returns: 结果字典
+    private func getRecord(stmt: COpaquePointer) -> [String : AnyObject] {
+        // 创建单条结果字典
+        var rowResult = [String : AnyObject]()
+        // 执行结果中字段数
+        let columnsCount = sqlite3_column_count(stmt)
+        
+        var value: AnyObject?
+        for col in 0..<columnsCount {
+            // 字段名
+            let cColumnName = sqlite3_column_name(stmt, col)
+            let columnName = String(CString: cColumnName, encoding: NSUTF8StringEncoding)
+            // 字段类型
+            let columnType = sqlite3_column_type(stmt, col)
+            // TODO: -- 未处理 blob 类型
+            switch columnType {
+            case SQLITE_INTEGER:
+                value = Int(sqlite3_column_int64(stmt, col))
+            case SQLITE_FLOAT:
+                value = sqlite3_column_double(stmt, col)
+            case SQLITE_TEXT:
+                let cText = UnsafePointer<Int8>(sqlite3_column_text(stmt, col))
+                value = String(CString: cText, encoding: NSUTF8StringEncoding)
+            case SQLITE_NULL:
+                value = NSNull()
+            default: print("不识别的字段类型")
+            }
+            rowResult[columnName!] = value
+        }
+        
+        return rowResult
     }
 }
 
@@ -69,6 +133,7 @@ extension DZSQLiteManager {
 }
 
 // MARK: - 数据修改操作语句执行
+// TODO: -- 对于批量操作的语句未进行处理
 extension DZSQLiteManager {
     
     /// 执行 SQL 插入数据
